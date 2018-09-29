@@ -190,7 +190,7 @@ func main() {
 
 
 	// 分解掉两个文件名，各自分配一个变量(image，imageother)
-	var b bytes.Buffer 
+	// var b bytes.Buffer 
 	var image,imageother string
 	if *form_data_filename != "" {
 		// s := strings.Split(form_data_filename,",")
@@ -198,7 +198,7 @@ func main() {
 		imageother ="2.jpg" 
 		// s[0],s[1]
 		
-		w := multipart.NewWriter(&b)
+		w := multipart.NewWriter(&bodyAll)
 		// Add your image file
 		f1, err := os.Open(image)
 		if err != nil {
@@ -238,7 +238,7 @@ func main() {
 		w.Close()
 
 		// Now that you have a form, you can submit it to your handler.
-		   req, err := http.NewRequest(method, url, &b)
+		   req, err := http.NewRequest(method, url, nil)
 		   if err != nil {
 			return 
 		    }
@@ -246,11 +246,11 @@ func main() {
 		    req.Header.Set("Content-Type", w.FormDataContentType())
 
 	}
-	else if *form_data_filename == ""{
+	else {
 	// set content-type
 	header.Set("Content-Type", *contentType)
-	    req, err := http.NewRequest(method, url,nil)
 	}
+	
 	var proxyURL *gourl.URL
 	if *proxyAddr != "" {
 		var err error
@@ -260,7 +260,7 @@ func main() {
 		}
 	}
         
-	//req, err := http.NewRequest(method, url, nil)
+	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
 		usageAndExit(err.Error())
