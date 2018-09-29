@@ -117,7 +117,7 @@ func uploadMultipartFile( )([]byte, string) {
 		// s[0],s[1]
 		// b := &bytes.Buffer{}
 		var b bytes.Buffer
-		w := multipart.NewWriter(b)
+		w := multipart.NewWriter(&b)
 
 		// Add your image file
 		f, err := os.Open(image)
@@ -161,7 +161,7 @@ func uploadMultipartFile( )([]byte, string) {
 	
 		// req, err := http.NewRequest("POST", url, body)
 		//  w.FormDataContentType()
-		return json.Marshal(&b) , w.FormDataContentType()
+		return json.Marshal(b) , w.FormDataContentType()
 }
 
 func main() {
