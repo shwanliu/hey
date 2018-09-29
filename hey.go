@@ -196,10 +196,10 @@ func main() {
 	if *form_data_filename != "" {
 		// s := strings.Split(form_data_filename,",")
 		// s[0],s[1]
-		bodyAll,*contentType =  uploadMultipartFile( )
+		bodyAll,*contentType =  uploadMultipartFile()
 	}
 
-	func uploadMultipartFile() ( []byte, string ) 
+	func uploadMultipartFile()
 	{
 		image = "/tmp/1.jpg"
 		imageother ="/tmp/2.jpg" 
