@@ -247,8 +247,7 @@ func main() {
 		    // Don't forget to set the content type, this will contain the boundary.
 		    req.Header.Set("Content-Type", w.FormDataContentType())
 
-	}
-	else {
+	}else {
 		// set content-type
 		header.Set("Content-Type", *contentType)
 	}
