@@ -21,6 +21,9 @@ import (
 	"io/ioutil"
 	"math"
 	"net/http"
+	"bytes"
+	"io"
+	"mime/multipart"
 	gourl "net/url"
 	"os"
 	"os/signal"
@@ -48,6 +51,8 @@ var (
 	authHeader  = flag.String("a", "", "")
 	hostHeader  = flag.String("host", "", "")
 
+	//两张图片的文件名的传入，文件名之间使用“,”隔开
+	form_data_filename = flag.String("F","1.jpg,2.jpg","")
 	output = flag.String("o", "", "")
 
 	c = flag.Int("c", 50, "")
@@ -90,6 +95,9 @@ Options:
   -a  Basic authentication, username:password.
   -x  HTTP Proxy address as host:port.
   -h2 Enable HTTP/2.
+  
+  //使用-F 指定两个文件名，文件名永光割逗号隔开
+  -F  form-data: filename,filename 
 
   -host	HTTP Host header.
 
@@ -180,6 +188,59 @@ func main() {
 		bodyAll = slurp
 	}
 
+
+	// 分解掉两个文件名，各自分配一个变量(image，imageother)
+	var b bytes.Buffer 
+	var image,imageother string
+	if *form_data_filename != "" {
+		// s := strings.Split(form_data_filename,",")
+		image = "1.jpg" 
+		imageother ="2.jpg" 
+		// s[0],s[1]
+		
+		w := multipart.NewWriter(&b)
+		// Add your image file
+		f1, err := os.Open(image)
+		if err != nil {
+			return 
+		}
+
+		defer f1.Close()
+
+		fw1, err := w.CreateFormFile("image", image)
+		if err != nil {
+			return 
+		}
+
+		if _, err = io.Copy(fw1, f1); err != nil {
+			return
+		}
+
+		// Add the other image
+		f2, err := os.Open(imageother)
+		if err != nil {
+			return 
+		}
+
+		defer f2.Close()
+
+		fw2, err := w.CreateFormFile("imageother", imageother)
+		if err != nil {
+			return 
+		}
+		
+		if _, err = io.Copy(fw2, f2); err != nil {
+			return
+		}
+
+		// Don't forget to close the multipart writer.
+		// If you don't close it, your request will be missing the terminating boundary.
+		w.Close()
+
+		// Now that you have a form, you can submit it to your handler.
+
+	}
+	
 	var proxyURL *gourl.URL
 	if *proxyAddr != "" {
 		var err error
@@ -189,7 +250,8 @@ func main() {
 		}
 	}
 
-	req, err := http.NewRequest(method, url, nil)
+	req, err := http.NewRequest(method, url, &b)
+
 	if err != nil {
 		usageAndExit(err.Error())
 	}
