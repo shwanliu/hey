@@ -236,7 +236,7 @@ func main() {
 
 		// Don't forget to close the multipart writer.
 		// If you don't close it, your request will be missing the terminating boundary.
-		bodyAll, err = json.Marshal(b)
+		bodyAll := &b
 		// _, err = w.Write(bodyAll)
 		w.Close()
         // _.err = bodyAll.write(b.bytes())
