@@ -110,6 +110,59 @@ Options:
                         (default for current machine is %d cores)
 `
 
+func uploadMultipartFile()  []byte, string 
+	{
+		image = "/tmp/1.jpg"
+		imageother ="/tmp/2.jpg" 
+		// s[0],s[1]
+		b := &bytes.Buffer{}
+		w := multipart.NewWriter(b)
+
+		// Add your image file
+		f, err := os.Open(image)
+		if err != nil {
+			return 
+		}
+		defer f.Close()
+
+		fw, err := w.CreateFormFile("image", filepath.Base(image))
+		if err != nil {
+			return 
+		}
+
+		if _, err = io.Copy(fw, f); err != nil {
+			return
+		}
+
+		// Add the other image
+		f, err = os.Open(imageother)
+		if err != nil {
+			return 
+		}
+
+		defer f.Close()
+
+		fw, err = w.CreateFormFile("imageother", filepath.Base(imageother))
+		if err != nil {
+			return 
+		}
+		
+		if _, err = io.Copy(fw, f); err != nil {
+			return
+		}
+
+		// Don't forget to close the multipart writer.
+		// If you don't close it, your request will be missing the terminating boundary.
+		
+		// _, err = w.Write(bodyAll)
+		w.Close()
+		// Don't forget to set the content type, this will contain the boundary.
+	
+		// req, err := http.NewRequest("POST", url, body)
+		//  w.FormDataContentType()
+		return b, w.FormDataContentType()
+	}
+
 func main() {
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, runtime.NumCPU()))
@@ -199,59 +252,7 @@ func main() {
 		bodyAll,*contentType =  uploadMultipartFile()
 	}
 
-	func uploadMultipartFile()  []byte, string 
-	{
-		image = "/tmp/1.jpg"
-		imageother ="/tmp/2.jpg" 
-		// s[0],s[1]
-		b := &bytes.Buffer{}
-		w := multipart.NewWriter(b)
-
-		// Add your image file
-		f, err := os.Open(image)
-		if err != nil {
-			return 
-		}
-		defer f.Close()
-
-		fw, err := w.CreateFormFile("image", filepath.Base(image))
-		if err != nil {
-			return 
-		}
-
-		if _, err = io.Copy(fw, f); err != nil {
-			return
-		}
-
-		// Add the other image
-		f, err = os.Open(imageother)
-		if err != nil {
-			return 
-		}
-
-		defer f.Close()
-
-		fw, err = w.CreateFormFile("imageother", filepath.Base(imageother))
-		if err != nil {
-			return 
-		}
-		
-		if _, err = io.Copy(fw, f); err != nil {
-			return
-		}
-
-		// Don't forget to close the multipart writer.
-		// If you don't close it, your request will be missing the terminating boundary.
-		
-		// _, err = w.Write(bodyAll)
-		w.Close()
-		// Don't forget to set the content type, this will contain the boundary.
 	
-		// req, err := http.NewRequest("POST", url, body)
-		//  w.FormDataContentType()
-		return b, w.FormDataContentType()
-	}
-
 	var proxyURL *gourl.URL
 	if *proxyAddr != "" {
 		var err error
