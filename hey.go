@@ -242,8 +242,8 @@ func main() {
         // _.err = bodyAll.write(b.bytes())
 			
 		// Don't forget to set the content type, this will contain the boundary.
-		req.Header.Set("Content-Type", w.FormDataContentType())
-		
+		header.Set("Content-Type", w.FormDataContentType())
+
 	}	else {
 		// set content-type
 		header.Set("Content-Type", *contentType)
