@@ -31,6 +31,7 @@ import (
 	"runtime"
 	"strings"
 	"time"
+	"json"
 
 	"github.com/rakyll/hey/requester"
 )
@@ -238,7 +239,7 @@ func main() {
 		bodyAll, err = json.Marshal(b)
 		// _, err = w.Write(bodyAll)
 		w.Close()
-        _.err = bodyAll.write(b.bytes())
+        // _.err = bodyAll.write(b.bytes())
 		// Now that you have a form, you can submit it to your handler.
 		   req, err := http.NewRequest(method, url, nil)
 		   if err != nil {
