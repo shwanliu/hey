@@ -149,7 +149,7 @@ func main() {
 
 	// set content-type
 	header := make(http.Header)
-// 	header.Set("Content-Type", *contentType)
+	header.Set("Content-Type", *contentType)
 	// set any other additional headers
 	if *headers != "" {
 		usageAndExit("Flag '-h' is deprecated, please use '-H' instead.")
@@ -196,61 +196,8 @@ func main() {
 	var image,imageother string
 	if *form_data_filename != "" {
 		// s := strings.Split(form_data_filename,",")
-		image = "/tmp/"
-		imageother ="/tmp/" 
 		// s[0],s[1]
-		
-		w := multipart.NewWriter(b)
-		// Add your image file
-		f, err := os.Open(image)
-		if err != nil {
-			return 
-		}
-		defer f.Close()
-
-		fw, err := w.CreateFormFile("image", filepath.Base(image))
-		if err != nil {
-			return 
-		}
-
-		if _, err = io.Copy(fw, f); err != nil {
-			return
-		}
-
-		// Add the other image
-		f, err = os.Open(imageother)
-		if err != nil {
-			return 
-		}
-
-		defer f.Close()
-
-		fw, err = w.CreateFormFile("imageother", filepath.Base(imageother))
-		if err != nil {
-			return 
-		}
-		
-		if _, err = io.Copy(fw, f); err != nil {
-			return
-		}
-
-		// Don't forget to close the multipart writer.
-		// If you don't close it, your request will be missing the terminating boundary.
-		
-		// _, err = w.Write(bodyAll)
-		w.Close()
-        // _.err = bodyAll.write(b.bytes())
-			
-		// Don't forget to set the content type, this will contain the boundary.
-		header.Set("Content-Type", w.FormDataContentType())
-		fmt.Sprintf(w.FormDataContentType())
-		// bodyAll = &b
-		slurp, err := json.Marshal(b)
-		bodyAll = slurp
-
-	}	else {
-		// set content-type
-		header.Set("Content-Type", *contentType)
+		bodyAl,contentType =  uploadMultipartFile( )
 	}
 
 	func uploadMultipartFile( )
@@ -258,8 +205,9 @@ func main() {
 		image = "/tmp/1.jpg"
 		imageother ="/tmp/2.jpg" 
 		// s[0],s[1]
-		
+		b := &bytes.Buffer{}
 		w := multipart.NewWriter(b)
+
 		// Add your image file
 		f, err := os.Open(image)
 		if err != nil {
@@ -300,9 +248,9 @@ func main() {
 		w.Close()
 		// Don't forget to set the content type, this will contain the boundary.
 	
-		req, err := http.NewRequest("POST", url, body)
-		req.Header.Set("Content-Type", writer.FormDataContentType())
-		return req, err
+		// req, err := http.NewRequest("POST", url, body)
+		//  w.FormDataContentType()
+		return b, w.FormDataContentType()
 	}
 
 	var proxyURL *gourl.URL
