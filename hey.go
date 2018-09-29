@@ -199,7 +199,7 @@ func main() {
 		bodyAll,*contentType =  uploadMultipartFile( )
 	}
 
-	func uploadMultipartFile( ) body_ []byte, ContentType_ string {
+	func uploadMultipartFile( )  []byte, string {
 		image = "/tmp/1.jpg"
 		imageother ="/tmp/2.jpg" 
 		// s[0],s[1]
