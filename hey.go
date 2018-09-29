@@ -31,7 +31,8 @@ import (
 	"runtime"
 	"strings"
 	"time"
-	"encoding/json"
+	"path/filepath"
+	// "encoding/json"
 
 	"github.com/rakyll/hey/requester"
 )
@@ -111,8 +112,8 @@ Options:
 `
 
 func uploadMultipartFile( )([]byte, string) {
-		image = "/tmp/1.jpg"
-		imageother ="/tmp/2.jpg" 
+		image := "/tmp/1.jpg"
+		imageother :="/tmp/2.jpg" 
 		// s[0],s[1]
 		b := &bytes.Buffer{}
 		w := multipart.NewWriter(b)
