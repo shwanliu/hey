@@ -243,7 +243,7 @@ func main() {
 			
 		// Don't forget to set the content type, this will contain the boundary.
 		header.Set("Content-Type", w.FormDataContentType())
-		fmt.Println(w.FormDataContentType())
+		fmt.Sprintf(w.FormDataContentType())
 
 	}	else {
 		// set content-type
