@@ -32,7 +32,7 @@ import (
 	"strings"
 	"time"
 	"path/filepath"
-	// "encoding/json"
+	"encoding/json"
 
 	"github.com/rakyll/hey/requester"
 )
@@ -160,7 +160,7 @@ func uploadMultipartFile( )([]byte, string) {
 	
 		// req, err := http.NewRequest("POST", url, body)
 		//  w.FormDataContentType()
-		return b, w.FormDataContentType()
+		return json.Marshal(b) , w.FormDataContentType()
 }
 
 func main() {
