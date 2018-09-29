@@ -240,15 +240,11 @@ func main() {
 		// _, err = w.Write(bodyAll)
 		w.Close()
         // _.err = bodyAll.write(b.bytes())
-		// Now that you have a form, you can submit it to your handler.
-		   req, err := http.NewRequest(method, url, nil)
-		   if err != nil {
-			return 
-		    }
-		    // Don't forget to set the content type, this will contain the boundary.
-		    req.Header.Set("Content-Type", w.FormDataContentType())
-
-	}else {
+			
+		// Don't forget to set the content type, this will contain the boundary.
+		req.Header.Set("Content-Type", w.FormDataContentType())
+		
+	}	else {
 		// set content-type
 		header.Set("Content-Type", *contentType)
 	}
