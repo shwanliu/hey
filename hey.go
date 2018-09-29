@@ -246,8 +246,8 @@ func main() {
 		    req.Header.Set("Content-Type", w.FormDataContentType())
 
 	}
-	else {
-	    req, err := http.NewRequest(method, url, nil)
+	else if *form_data_filename == ""{
+	    req, err := http.NewRequest(method, url,nil)
 	}
 	var proxyURL *gourl.URL
 	if *proxyAddr != "" {
@@ -258,7 +258,7 @@ func main() {
 		}
 	}
         
-	req, err := http.NewRequest(method, url, nil)
+	//req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
 		usageAndExit(err.Error())
