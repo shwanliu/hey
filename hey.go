@@ -31,7 +31,7 @@ import (
 	"runtime"
 	"strings"
 	"time"
-	"encoding/json"
+	// "encoding/json"
 
 	"github.com/rakyll/hey/requester"
 )
