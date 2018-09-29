@@ -148,7 +148,7 @@ func main() {
 
 	// set content-type
 	header := make(http.Header)
-	header.Set("Content-Type", *contentType)
+// 	header.Set("Content-Type", *contentType)
 	// set any other additional headers
 	if *headers != "" {
 		usageAndExit("Flag '-h' is deprecated, please use '-H' instead.")
@@ -247,6 +247,8 @@ func main() {
 
 	}
 	else if *form_data_filename == ""{
+	// set content-type
+	header.Set("Content-Type", *contentType)
 	    req, err := http.NewRequest(method, url,nil)
 	}
 	var proxyURL *gourl.URL
