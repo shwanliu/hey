@@ -238,9 +238,17 @@ func main() {
 		w.Close()
 
 		// Now that you have a form, you can submit it to your handler.
+		   req, err := http.NewRequest("POST", url, &b)
+		   if err != nil {
+			return 
+		    }
+		    // Don't forget to set the content type, this will contain the boundary.
+		    req.Header.Set("Content-Type", w.FormDataContentType())
 
 	}
-	
+	else {
+	    req, err := http.NewRequest(method, url, nil)
+	}
 	var proxyURL *gourl.URL
 	if *proxyAddr != "" {
 		var err error
@@ -249,7 +257,7 @@ func main() {
 			usageAndExit(err.Error())
 		}
 	}
-
+        
 	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
