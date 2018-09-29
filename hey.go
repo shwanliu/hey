@@ -206,7 +206,7 @@ func main() {
 
 	// set content-type
 	header := make(http.Header)
-	header.Set("Content-Type", *contentType)
+	// header.Set("Content-Type", *contentType)
 	// set any other additional headers
 	if *headers != "" {
 		usageAndExit("Flag '-h' is deprecated, please use '-H' instead.")
@@ -256,6 +256,8 @@ func main() {
 		bodyAll,*contentType =  uploadMultipartFile()
 	}
 
+    // fixed to support MultipartFile upload
+	header.Set("Content-Type", *contentType)
 	
 	var proxyURL *gourl.URL
 	if *proxyAddr != "" {
@@ -272,7 +274,8 @@ func main() {
 		usageAndExit(err.Error())
 	}
 
-	fmt.Println(bodyAll)
+	// fmt.Println(bodyAll)
+	fmt.Println()
 	req.ContentLength = int64(len(bodyAll))
 	if username != "" || password != "" {
 		req.SetBasicAuth(username, password)
