@@ -238,7 +238,7 @@ func main() {
 		w.Close()
 
 		// Now that you have a form, you can submit it to your handler.
-		   req, err := http.NewRequest("POST", url, &b)
+		   req, err := http.NewRequest(method, url, &b)
 		   if err != nil {
 			return 
 		    }
