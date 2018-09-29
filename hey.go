@@ -257,7 +257,7 @@ func main() {
 	}
 
 	// fixed to support MultipartFile upload
-	fmt.Println(*contentType)
+	// fmt.Println(*contentType)
 	header.Set("Content-Type", *contentType)
 	
 	var proxyURL *gourl.URL
@@ -276,7 +276,7 @@ func main() {
 	}
 
 	// fmt.Println(bodyAll)
-	fmt.Println(*contentType)
+	// fmt.Println(*contentType)
 	req.ContentLength = int64(len(bodyAll))
 	if username != "" || password != "" {
 		req.SetBasicAuth(username, password)
