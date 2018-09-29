@@ -245,7 +245,8 @@ func main() {
 		header.Set("Content-Type", w.FormDataContentType())
 		fmt.Sprintf(w.FormDataContentType())
 		// bodyAll = &b
-		bodyAll, err := json.Marshal(b)
+		slurp, err := json.Marshal(b)
+		bodyAll = slurp
 
 	}	else {
 		// set content-type
