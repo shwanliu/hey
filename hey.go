@@ -256,7 +256,8 @@ func main() {
 		bodyAll,*contentType =  uploadMultipartFile()
 	}
 
-    // fixed to support MultipartFile upload
+	// fixed to support MultipartFile upload
+	fmt.Println(*contentType)
 	header.Set("Content-Type", *contentType)
 	
 	var proxyURL *gourl.URL
