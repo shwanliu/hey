@@ -162,7 +162,8 @@ func uploadMultipartFile( )([]byte, string) {
 		// req, err := http.NewRequest("POST", url, body)
 		//  w.FormDataContentType()
 		var b_ []byte
-		b_ , err=json.Marshal(&b)
+		// b_ , err=json.Marshal(&b)
+		b_ , _ := ioutil.ReadAll(b)
 		return b_ , w.FormDataContentType()
 }
 
