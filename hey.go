@@ -54,7 +54,7 @@ var (
 	hostHeader  = flag.String("host", "", "")
 
 	//两张图片的文件名的传入，文件名之间使用“,”隔开
-	form_data_filename = flag.String("F","1.jpg,2.jpg","")
+	form_data_filename = flag.String("File","1.jpg,2.jpg","")
 	output = flag.String("o", "", "")
 
 	c = flag.Int("c", 50, "")
@@ -99,7 +99,7 @@ Options:
   -h2 Enable HTTP/2.
   
   //使用-F 指定两个文件名，文件名永光割逗号隔开
-  -F  form-data: filename,filename 
+  -File  form-data: filename,filename 
 
   -host	HTTP Host header.
 
