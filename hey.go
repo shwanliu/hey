@@ -276,7 +276,7 @@ func main() {
 	}
 
 	// fmt.Println(bodyAll)
-	fmt.Println()
+	fmt.Println(*contentType)
 	req.ContentLength = int64(len(bodyAll))
 	if username != "" || password != "" {
 		req.SetBasicAuth(username, password)
