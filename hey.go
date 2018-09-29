@@ -191,24 +191,24 @@ func main() {
 
 
 	// 分解掉两个文件名，各自分配一个变量(image，imageother)
-	var b bytes.Buffer 
+	// var b bytes.Buffer 
+	var b := &bytes.Buffer{}
 	var image,imageother string
 	if *form_data_filename != "" {
 		// s := strings.Split(form_data_filename,",")
-		image = "1.jpg" 
-		imageother ="2.jpg" 
+		image = "/tmp/"
+		imageother ="/tmp/" 
 		// s[0],s[1]
 		
-		w := multipart.NewWriter(&b)
+		w := multipart.NewWriter(b)
 		// Add your image file
 		f, err := os.Open(image)
 		if err != nil {
 			return 
 		}
-
 		defer f.Close()
 
-		fw, err := w.CreateFormFile("image", image)
+		fw, err := w.CreateFormFile("image", filepath.Base(image))
 		if err != nil {
 			return 
 		}
@@ -225,7 +225,7 @@ func main() {
 
 		defer f.Close()
 
-		fw, err = w.CreateFormFile("imageother", imageother)
+		fw, err = w.CreateFormFile("imageother", filepath.Base(imageother))
 		if err != nil {
 			return 
 		}
@@ -251,6 +251,58 @@ func main() {
 	}	else {
 		// set content-type
 		header.Set("Content-Type", *contentType)
+	}
+
+	func uploadMultipartFile( )
+	{
+		image = "/tmp/1.jpg"
+		imageother ="/tmp/2.jpg" 
+		// s[0],s[1]
+		
+		w := multipart.NewWriter(b)
+		// Add your image file
+		f, err := os.Open(image)
+		if err != nil {
+			return 
+		}
+		defer f.Close()
+
+		fw, err := w.CreateFormFile("image", filepath.Base(image))
+		if err != nil {
+			return 
+		}
+
+		if _, err = io.Copy(fw, f); err != nil {
+			return
+		}
+
+		// Add the other image
+		f, err = os.Open(imageother)
+		if err != nil {
+			return 
+		}
+
+		defer f.Close()
+
+		fw, err = w.CreateFormFile("imageother", filepath.Base(imageother))
+		if err != nil {
+			return 
+		}
+		
+		if _, err = io.Copy(fw, f); err != nil {
+			return
+		}
+
+		// Don't forget to close the multipart writer.
+		// If you don't close it, your request will be missing the terminating boundary.
+		
+		// _, err = w.Write(bodyAll)
+		w.Close()
+		// Don't forget to set the content type, this will contain the boundary.
+	
+		req, err := http.NewRequest("POST", url, body)
+		req.Header.Set("Content-Type", writer.FormDataContentType())
+		return req, err
 	}
 
 	var proxyURL *gourl.URL
