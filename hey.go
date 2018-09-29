@@ -32,7 +32,6 @@ import (
 	"strings"
 	"time"
 	"encoding/json"
-	"fmt"
 
 	"github.com/rakyll/hey/requester"
 )
