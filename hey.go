@@ -161,7 +161,8 @@ func uploadMultipartFile( )([]byte, string) {
 	
 		// req, err := http.NewRequest("POST", url, body)
 		//  w.FormDataContentType()
-		return json.Marshal(&b) , w.FormDataContentType()
+		b_ , err=json.Marshal(&b)
+		return b_ , w.FormDataContentType()
 }
 
 func main() {
