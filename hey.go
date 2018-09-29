@@ -31,7 +31,7 @@ import (
 	"runtime"
 	"strings"
 	"time"
-	// "encoding/json"
+	"encoding/json"
 
 	"github.com/rakyll/hey/requester"
 )
@@ -244,8 +244,9 @@ func main() {
 		// Don't forget to set the content type, this will contain the boundary.
 		header.Set("Content-Type", w.FormDataContentType())
 		fmt.Sprintf(w.FormDataContentType())
-		bodyAll = &b
-		
+		// bodyAll = &b
+		bodyAll, err := json.Marshal(b)
+
 	}	else {
 		// set content-type
 		header.Set("Content-Type", *contentType)
