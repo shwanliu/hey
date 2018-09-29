@@ -208,12 +208,12 @@ func main() {
 
 		defer f1.Close()
 
-		fw1, err := w.CreateFormFile("image", image)
+		fw, err := w.CreateFormFile("image", image)
 		if err != nil {
 			return 
 		}
 
-		if _, err = io.Copy(fw1, f1); err != nil {
+		if _, err = io.Copy(fw, f1); err != nil {
 			return
 		}
 
@@ -225,12 +225,12 @@ func main() {
 
 		defer f2.Close()
 
-		fw2, err := w.CreateFormFile("imageother", imageother)
+		fw, err := w.CreateFormFile("imageother", imageother)
 		if err != nil {
 			return 
 		}
 		
-		if _, err = io.Copy(fw2, f2); err != nil {
+		if _, err = io.Copy(fw, f2); err != nil {
 			return
 		}
 
