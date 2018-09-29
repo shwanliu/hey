@@ -250,7 +250,7 @@ func main() {
 		}
 	}
 
-	req, err := http.NewRequest(method, url, &b)
+	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
 		usageAndExit(err.Error())
