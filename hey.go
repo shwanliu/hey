@@ -206,14 +206,14 @@ func main() {
 			return 
 		}
 
-		defer f1.Close()
+		defer f.Close()
 
 		fw, err := w.CreateFormFile("image", image)
 		if err != nil {
 			return 
 		}
 
-		if _, err = io.Copy(fw, f1); err != nil {
+		if _, err = io.Copy(fw, f); err != nil {
 			return
 		}
 
