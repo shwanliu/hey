@@ -201,7 +201,7 @@ func main() {
 		
 		w := multipart.NewWriter(&b)
 		// Add your image file
-		f1, err := os.Open(image)
+		f, err := os.Open(image)
 		if err != nil {
 			return 
 		}
@@ -218,19 +218,19 @@ func main() {
 		}
 
 		// Add the other image
-		f2, err := os.Open(imageother)
+		f, err = os.Open(imageother)
 		if err != nil {
 			return 
 		}
 
-		defer f2.Close()
+		defer f.Close()
 
-		fw, err := w.CreateFormFile("imageother", imageother)
+		fw, err = w.CreateFormFile("imageother", imageother)
 		if err != nil {
 			return 
 		}
 		
-		if _, err = io.Copy(fw, f2); err != nil {
+		if _, err = io.Copy(fw, f); err != nil {
 			return
 		}
 
