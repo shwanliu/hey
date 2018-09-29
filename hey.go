@@ -115,7 +115,8 @@ func uploadMultipartFile( )([]byte, string) {
 		image := "/tmp/1.jpg"
 		imageother :="/tmp/2.jpg" 
 		// s[0],s[1]
-		b := &bytes.Buffer{}
+		// b := &bytes.Buffer{}
+		var b bytes.Buffer
 		w := multipart.NewWriter(b)
 
 		// Add your image file
