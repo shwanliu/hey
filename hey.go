@@ -192,12 +192,11 @@ func main() {
 
 	// 分解掉两个文件名，各自分配一个变量(image，imageother)
 	// var b bytes.Buffer 
-	var b := &bytes.Buffer{}
-	var image,imageother string
+	// var image,imageother string
 	if *form_data_filename != "" {
 		// s := strings.Split(form_data_filename,",")
 		// s[0],s[1]
-		bodyAl,contentType =  uploadMultipartFile( )
+		bodyAll,*contentType =  uploadMultipartFile( )
 	}
 
 	func uploadMultipartFile( )
