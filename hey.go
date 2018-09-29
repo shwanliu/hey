@@ -236,7 +236,7 @@ func main() {
 
 		// Don't forget to close the multipart writer.
 		// If you don't close it, your request will be missing the terminating boundary.
-		bodyAll := &b
+		
 		// _, err = w.Write(bodyAll)
 		w.Close()
         // _.err = bodyAll.write(b.bytes())
@@ -244,7 +244,8 @@ func main() {
 		// Don't forget to set the content type, this will contain the boundary.
 		header.Set("Content-Type", w.FormDataContentType())
 		fmt.Sprintf(w.FormDataContentType())
-
+		bodyAll = &b
+		
 	}	else {
 		// set content-type
 		header.Set("Content-Type", *contentType)
