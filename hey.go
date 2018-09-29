@@ -206,7 +206,7 @@ func main() {
 
 	// set content-type
 	header := make(http.Header)
-	// header.Set("Content-Type", *contentType)
+	header.Set("Content-Type", *contentType)
 	// set any other additional headers
 	if *headers != "" {
 		usageAndExit("Flag '-h' is deprecated, please use '-H' instead.")
@@ -253,12 +253,12 @@ func main() {
 	if *form_data_filename != "" {
 		// s := strings.Split(form_data_filename,",")
 		// s[0],s[1]
-		bodyAll,*contentType =  uploadMultipartFile()
+		bodyAll, _ =  uploadMultipartFile()
 	}
 
 	// fixed to support MultipartFile upload
 	// fmt.Println(*contentType)
-	header.Set("Content-Type", *contentType)
+	// header.Set("Content-Type", *contentType)
 	
 	var proxyURL *gourl.URL
 	if *proxyAddr != "" {
