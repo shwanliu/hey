@@ -110,8 +110,8 @@ Options:
                         (default for current machine is %d cores)
 `
 
-func uploadMultipartFile()  []byte, string 
-	{
+func uploadMultipartFile()  ([]byte, string) 
+{
 		image = "/tmp/1.jpg"
 		imageother ="/tmp/2.jpg" 
 		// s[0],s[1]
