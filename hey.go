@@ -190,7 +190,7 @@ func main() {
 
 
 	// 分解掉两个文件名，各自分配一个变量(image，imageother)
-	// var b bytes.Buffer 
+	var b bytes.Buffer 
 	var image,imageother string
 	if *form_data_filename != "" {
 		// s := strings.Split(form_data_filename,",")
@@ -198,7 +198,7 @@ func main() {
 		imageother ="2.jpg" 
 		// s[0],s[1]
 		
-		w := multipart.NewWriter(&bodyAll)
+		w := multipart.NewWriter(&b)
 		// Add your image file
 		f1, err := os.Open(image)
 		if err != nil {
@@ -236,7 +236,7 @@ func main() {
 		// Don't forget to close the multipart writer.
 		// If you don't close it, your request will be missing the terminating boundary.
 		w.Close()
-
+        _.err = bodyAll.write(b.bytes())
 		// Now that you have a form, you can submit it to your handler.
 		   req, err := http.NewRequest(method, url, nil)
 		   if err != nil {
@@ -247,10 +247,10 @@ func main() {
 
 	}
 	else {
-	// set content-type
-	header.Set("Content-Type", *contentType)
+		// set content-type
+		header.Set("Content-Type", *contentType)
 	}
-	
+
 	var proxyURL *gourl.URL
 	if *proxyAddr != "" {
 		var err error
