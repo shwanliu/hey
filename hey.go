@@ -55,6 +55,7 @@ var (
 
 	//两张图片的文件名的传入，文件名之间使用“,”隔开
 	form_data_filename = flag.String("F","","")
+
 	output = flag.String("o", "", "")
 
 	c = flag.Int("c", 50, "")
@@ -98,7 +99,7 @@ Options:
   -x  HTTP Proxy address as host:port.
   -h2 Enable HTTP/2.
   
-  //使用-F 指定两个文件名，文件名永光割逗号隔开
+  //使用-F 指定两个文件名，两个文件名之间用逗号隔开
   -F  form-data: filename,filename 
 
   -host	HTTP Host header.
@@ -110,13 +111,10 @@ Options:
   -cpus                 Number of used cpu cores.
                         (default for current machine is %d cores)
 `
+// 对于多图片文件上传，该函数的使用是针对人脸引擎接口face_verify的压力测试，
+func uploadMultipartFile(image string, imageother string )))([]byte, string) {
 
-func uploadMultipartFile( )([]byte, string) {
-		image := "1.jpg"
-		imageother :="2.jpg" 
-		// s[0],s[1]
-		// b := &bytes.Buffer{}
-		var b bytes.Buffer
+		var b bytes.Buffer  
 		w := multipart.NewWriter(&b)
 
 		// Add your image file
@@ -128,37 +126,36 @@ func uploadMultipartFile( )([]byte, string) {
 
 		fw, err := w.CreateFormFile("image", filepath.Base(image))
 		if err != nil {
-			fmt.Println("error CreateFormFile for image")
+			fmt.Println(" CreateFormFile for image error ")
 		}
 
 		if _, err = io.Copy(fw, f); err != nil {
-			fmt.Println("error Io.Copy")
+			fmt.Println(" Io.Copy error ")
 		}
 
 		// Add the other image
 		f, err = os.Open(imageother)
 		if err != nil {
-			fmt.Println("error open imageother")
+			fmt.Println(" open imageother error  ")
 		}
 
 		defer f.Close()
 
 		fw, err = w.CreateFormFile("imageother", filepath.Base(imageother))
 		if err != nil {
-			fmt.Println("error CreateFormFile for imageother")
+			fmt.Println(" CreateFormFile for imageother error ")
 		}
 		
 		if _, err = io.Copy(fw, f); err != nil {
-			fmt.Println("error Io.Copy")
+			fmt.Println(" Io.Copy error ")
 		}
 
-		// Don't forget to close the multipart writer.
-		// If you don't close it, your request will be missing the terminating boundary.
-		
+		// Don't forget to close the multipart writer
 		w.Close()
 
 		var b_ []byte
 		b_ , _ = ioutil.ReadAll(&b)
+		//使用 返回所需要的ContentType，里面会有boundary的参数
 		return b_ , w.FormDataContentType()
 }
 
@@ -199,11 +196,9 @@ func main() {
 	url := flag.Args()[0]
 	method := strings.ToUpper(*m)
 
-	// set content-type
+	// set content-type change by shawnliu
 	header := make(http.Header)
-	// header.Set("Content-Type", *contentType)
 
-	
 	// set any other additional headers
 	if *headers != "" {
 		usageAndExit("Flag '-h' is deprecated, please use '-H' instead.")
@@ -244,10 +239,10 @@ func main() {
 	}
 
 	// 分解掉两个文件名，各自分配一个变量(image，imageother)
-	// var b bytes.Buffer 
-	// var image,imageother string
+	var image,imageother string
 	if *form_data_filename != "" {
-		bodyAll, *contentType =  uploadMultipartFile()
+        fmt.Printf("%q\n", strings.Split(*form_data_filename, ","))
+		bodyAll, *contentType =  uploadMultipartFile(image,imageother)
 	}
 	
 	var proxyURL *gourl.URL
@@ -259,7 +254,7 @@ func main() {
 		}
 	}
 	
-	// 设置request的 "Content-Type"
+	// 设置request的 "Content-Type",改变原本设定位置，因为form-data的post，需要 boundary=XXXXX
 	header.Set("Content-Type", *contentType)
 
 	req, err := http.NewRequest(method, url, nil)
