@@ -112,7 +112,7 @@ Options:
                         (default for current machine is %d cores)
 `
 // 对于多图片文件上传，该函数的使用是针对人脸引擎接口face_verify的压力测试，
-func uploadMultipartFile(image string, imageother string )))([]byte, string) {
+func uploadMultipartFile(image string, imageother string )([]byte, string) {
 
 		var b bytes.Buffer  
 		w := multipart.NewWriter(&b)
