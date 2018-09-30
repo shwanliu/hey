@@ -245,7 +245,8 @@ func main() {
 		fmt.Printf("%q\n", MultiFilename)
 		image = MultiFilename[0]
 		imageother = MultiFilename[1]
-		fmt.Printf(image,imageother)
+		fmt.Printf(image)
+		fmt.Printf(imageother)
 		bodyAll, *contentType =  uploadMultipartFile(image,imageother)
 	}
 	
