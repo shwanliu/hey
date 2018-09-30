@@ -238,11 +238,13 @@ func main() {
 		bodyAll = slurp
 	}
 
-	// 分解掉两个文件名，各自分配一个变量(image，imageother)
-	var image,imageother string
+	// 分解出两个文件名，对应(image，imageother)
+	var image，imageother string
 	if *form_data_filename != "" {
 		MultiFilename := strings.Split(*form_data_filename,",")
-		fmt.Printf("upload imagefiles are : %q\n", MultiFilename)
+		fmt.Printf("upload imagefiles are  %q\n", MultiFilename)
+		image = MultiFilename[0]
+		imageother = MultiFilename[1]
 		bodyAll, *contentType =  uploadMultipartFile(image,imageother)
 	}
 	
