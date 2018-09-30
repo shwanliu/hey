@@ -242,11 +242,7 @@ func main() {
 	var image,imageother string
 	if *form_data_filename != "" {
 		MultiFilename := strings.Split(*form_data_filename,",")
-		fmt.Printf("%q\n", MultiFilename)
-		image = MultiFilename[0]
-		imageother = MultiFilename[1]
-		fmt.Printf(image)
-		fmt.Printf(imageother)
+		fmt.Printf("upload imagefiles are : %q\n", MultiFilename)
 		bodyAll, *contentType =  uploadMultipartFile(image,imageother)
 	}
 	
