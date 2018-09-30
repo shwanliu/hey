@@ -54,7 +54,7 @@ var (
 	hostHeader  = flag.String("host", "", "")
 
 	//两张图片的文件名的传入，文件名之间使用“,”隔开
-	form_data_filename = flag.String("File","1.jpg,2.jpg","")
+	form_data_filename = flag.String("File","","")
 	output = flag.String("o", "", "")
 
 	c = flag.Int("c", 50, "")
@@ -245,7 +245,6 @@ func main() {
 		}
 		bodyAll = slurp
 	}
-
 
 	// 分解掉两个文件名，各自分配一个变量(image，imageother)
 	// var b bytes.Buffer 
