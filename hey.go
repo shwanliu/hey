@@ -201,7 +201,9 @@ func main() {
 
 	// set content-type
 	header := make(http.Header)
-	header.Set("Content-Type", *contentType)
+	// header.Set("Content-Type", *contentType)
+
+	
 	// set any other additional headers
 	if *headers != "" {
 		usageAndExit("Flag '-h' is deprecated, please use '-H' instead.")
@@ -245,7 +247,7 @@ func main() {
 	// var b bytes.Buffer 
 	// var image,imageother string
 	if *form_data_filename != "" {
-		bodyAll, _ =  uploadMultipartFile()
+		bodyAll, *contentType =  uploadMultipartFile()
 	}
 	
 	var proxyURL *gourl.URL
@@ -256,7 +258,10 @@ func main() {
 			usageAndExit(err.Error())
 		}
 	}
-        
+	
+	// 设置request的 "Content-Type"
+	header.Set("Content-Type", *contentType)
+
 	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
