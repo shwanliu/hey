@@ -239,7 +239,7 @@ func main() {
 	}
 
 	// 分解掉两个文件名，各自分配一个变量(image，imageother)
-	var image,imageother,MultiFilename string
+	var image,imageother string
 	if *form_data_filename != "" {
 		MultiFilename = strings.Split(*form_data_filename,",")
 		fmt.Printf("%q\n", MultiFilename)
