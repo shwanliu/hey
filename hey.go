@@ -112,8 +112,8 @@ Options:
 `
 
 func uploadMultipartFile( )([]byte, string) {
-		image := "/tmp/1.jpg"
-		imageother :="/tmp/2.jpg" 
+		image := "1.jpg"
+		imageother :="2.jpg" 
 		// s[0],s[1]
 		// b := &bytes.Buffer{}
 		var b bytes.Buffer
@@ -122,34 +122,34 @@ func uploadMultipartFile( )([]byte, string) {
 		// Add your image file
 		f, err := os.Open(image)
 		if err != nil {
-			fmt.Println("error")
+			fmt.Println("error open image")
 		}
 		defer f.Close()
 
 		fw, err := w.CreateFormFile("image", filepath.Base(image))
 		if err != nil {
-			fmt.Println("error")
+			fmt.Println("error CreateFormFile for image")
 		}
 
 		if _, err = io.Copy(fw, f); err != nil {
-			fmt.Println("error")
+			fmt.Println("error Io.Copy")
 		}
 
 		// Add the other image
 		f, err = os.Open(imageother)
 		if err != nil {
-			fmt.Println("error")
+			fmt.Println("error open imageother")
 		}
 
 		defer f.Close()
 
 		fw, err = w.CreateFormFile("imageother", filepath.Base(imageother))
 		if err != nil {
-			fmt.Println("error")
+			fmt.Println("error CreateFormFile for imageother")
 		}
 		
 		if _, err = io.Copy(fw, f); err != nil {
-			fmt.Println("error")
+			fmt.Println("error Io.Copy")
 		}
 
 		// Don't forget to close the multipart writer.
