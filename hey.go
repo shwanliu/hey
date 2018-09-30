@@ -251,14 +251,8 @@ func main() {
 	// var b bytes.Buffer 
 	// var image,imageother string
 	if *form_data_filename != "" {
-		// s := strings.Split(form_data_filename,",")
-		// s[0],s[1]
 		bodyAll, _ =  uploadMultipartFile()
 	}
-
-	// fixed to support MultipartFile upload
-	// fmt.Println(*contentType)
-	// header.Set("Content-Type", *contentType)
 	
 	var proxyURL *gourl.URL
 	if *proxyAddr != "" {
@@ -275,8 +269,6 @@ func main() {
 		usageAndExit(err.Error())
 	}
 
-	// fmt.Println(bodyAll)
-	// fmt.Println(*contentType)
 	req.ContentLength = int64(len(bodyAll))
 	if username != "" || password != "" {
 		req.SetBasicAuth(username, password)
