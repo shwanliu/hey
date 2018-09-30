@@ -239,7 +239,7 @@ func main() {
 	}
 
 	// 分解出两个文件名，对应(image，imageother)
-	var image，imageother string
+	var image,imageother string
 	if *form_data_filename != "" {
 		MultiFilename := strings.Split(*form_data_filename,",")
 		fmt.Printf("upload imagefiles are  %q\n", MultiFilename)
