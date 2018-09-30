@@ -54,7 +54,7 @@ var (
 	hostHeader  = flag.String("host", "", "")
 
 	//两张图片的文件名的传入，文件名之间使用“,”隔开
-	form_data_filename = flag.String("File","","")
+	form_data_filename = flag.String("F","","")
 	output = flag.String("o", "", "")
 
 	c = flag.Int("c", 50, "")
@@ -99,7 +99,7 @@ Options:
   -h2 Enable HTTP/2.
   
   //使用-F 指定两个文件名，文件名永光割逗号隔开
-  -File  form-data: filename,filename 
+  -F  form-data: filename,filename 
 
   -host	HTTP Host header.
 
@@ -155,14 +155,9 @@ func uploadMultipartFile( )([]byte, string) {
 		// Don't forget to close the multipart writer.
 		// If you don't close it, your request will be missing the terminating boundary.
 		
-		// _, err = w.Write(bodyAll)
 		w.Close()
-		// Don't forget to set the content type, this will contain the boundary.
-	
-		// req, err := http.NewRequest("POST", url, body)
-		//  w.FormDataContentType()
+
 		var b_ []byte
-		// b_ , err=json.Marshal(&b)
 		b_ , _ = ioutil.ReadAll(&b)
 		return b_ , w.FormDataContentType()
 }
