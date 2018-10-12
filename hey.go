@@ -190,7 +190,7 @@ func upload_AddFace(name string, image string, customId string )([]byte, string)
 	}
 	defer f.Close()
 
-	fw, err := w.CreateFormFile("image", filepath.Base(image))
+	fw, err = w.CreateFormFile("image", filepath.Base(image))
 	if err != nil {
 		fmt.Println(" CreateFormFile for image error ")
 	}
@@ -200,7 +200,7 @@ func upload_AddFace(name string, image string, customId string )([]byte, string)
 	}
 
 	// Add the customId
-	fw, err := w.CreateFormField("customId")
+	fw, err = w.CreateFormField("customId")
 	if err != nil {
 		fmt.Println(" CreateFormField for image error ")
 	}
