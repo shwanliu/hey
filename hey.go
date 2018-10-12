@@ -56,6 +56,12 @@ var (
 	//两张图片的文件名的传入，文件名之间使用“,”隔开
 	form_data_filename = flag.String("F","","")
 
+	//人脸入库，请求参数为 {人脸库名称} {图片} {customId}
+	add_face_form_data = flag.String("add","","")
+	
+	//人脸入库，请求参数为 {人脸库名称} {图片} {score} {topn}
+	identify_face_form_data = flag.String("identify","","")
+
 	output = flag.String("o", "", "")
 
 	c = flag.Int("c", 50, "")
@@ -159,6 +165,59 @@ func uploadMultipartFile(image string, imageother string )([]byte, string) {
 		return b_ , w.FormDataContentType()
 }
 
+
+// 该函数的使用是针对人脸引擎接口人脸入库的压力测试，
+func upload_AddFace(name string, image string, customId string )([]byte, string) {
+
+	var b bytes.Buffer  
+	w := multipart.NewWriter(&b)
+
+	// Add the facedb name
+	fw, err = w.CreateFormFile("name")
+	if err != nil {
+		fmt.Println(" CreateFormFile for name error ")
+	}
+		
+	if _, err = fw.Write([]byte(name)); err != nil {
+		return
+	}
+
+	// Add your image file
+	f, err := os.Open(image)
+	if err != nil {
+		fmt.Println("error open image")
+	}
+	defer f.Close()
+
+	fw, err := w.CreateFormFile("image", filepath.Base(image))
+	if err != nil {
+		fmt.Println(" CreateFormFile for image error ")
+	}
+
+	if _, err = io.Copy(fw, f); err != nil {
+		fmt.Println(" Io.Copy error ")
+	}
+
+	// Add the customId
+	fw, err = w.CreateFormFile("customId")
+	if err != nil {
+		fmt.Println(" CreateFormFile for name error ")
+	}
+		
+	if _, err = fw.Write([]byte(name)); err != nil {
+		return
+	}
+
+	// Don't forget to close the multipart writer
+	w.Close()
+
+	var b_ []byte
+	b_ , _ = ioutil.ReadAll(&b)
+	//使用 返回所需要的ContentType，里面会有boundary的参数
+	return b_ , w.FormDataContentType()
+}
+
+
 func main() {
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, runtime.NumCPU()))
@@ -247,7 +306,19 @@ func main() {
 		imageother = MultiFilename[1]
 		bodyAll, *contentType =  uploadMultipartFile(image,imageother)
 	}
+
+	var name_,image_,customId_ string
+	if *add_face_form_data!= "" {
+		MultiFilename := strings.Split(*add_face_form_data,",")
+		fmt.Printf("upload imagefiles are  %q\n", MultiFilename)
+		name_ = MultiFilename[0]
+		image_= MultiFilename[1]
+		customId_= MultiFilename[2]
+		bodyAll, *contentType =  upload_AddFace(name_,image_,customId_)
+	}
 	
+    //
+
 	var proxyURL *gourl.URL
 	if *proxyAddr != "" {
 		var err error
