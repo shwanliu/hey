@@ -173,11 +173,13 @@ func upload_AddFace(name string, image string, customId string )([]byte, string)
 	w := multipart.NewWriter(&b)
 
 	// Add the facedb name
-	if fw, err = w.CreateFormField("image"); err != nil {
+	fw, err = w.CreateFormField("image")
+	if err != nil {
         return
     }
-		
-	if _, err = fw.Write([]byte(name)); err != nil {
+	
+	_, err = fw.Write([]byte(name))
+	if err != nil {
 		return
 	}
 
@@ -198,11 +200,13 @@ func upload_AddFace(name string, image string, customId string )([]byte, string)
 	}
 
 	// Add the customId
-	if fw, err = w.CreateFormField("customId"); err != nil {
+	fw, err = w.CreateFormField("customId")
+	if err != nil {
         return
-    }
-		
-	if _, err = fw.Write([]byte(name)); err != nil {
+	}
+	
+	_, err = fw.Write([]byte(name))
+	if err != nil {
 		return
 	}
 
